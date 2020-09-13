@@ -1,0 +1,48 @@
+<ng-template appPlaceHolder></ng-template>
+<div class="row">
+        <!-- <div *ngIf="errorMsg" class=" col-xs-12 col-md-6 col-md-offset-3 alert alert-danger" style="margin-bottom: 25px;" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{errorMsg}}
+        </div> -->
+        <!-- <app-alert [message]="errorMsg" (close)="clearError()" *ngIf="errorMsg"></app-alert> -->
+    <div   class="col-xs-12 col-md-6 col-md-offset-3">
+        <form  *ngIf="!isLoading"  #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <div class="row">        
+            <div class=" form-group">
+                    <label for="name">Email</label>
+                    <input type="email" id="email" name="email" #Email=ngModel required email
+                     ngModel class="form-control"  [class.is-invalid]="Email.invalid && Email.touched"
+                    >
+                    <small class="text-danger" *ngIf="Email.errors?.required && Email.touched">The Email is Required</small>
+                    <small class="text-danger" *ngIf="Email.errors?.email && Email.touched">The Email is Not Valid</small>
+            </div>
+        </div>  
+        <div class="row">
+            <div class=" form-group">
+                    <label for="name">Password</label>
+                    <input type="password" id="password" name="password" #Pass=ngModel required minlength="6"
+                     ngModel class="form-control"  [class.is-invalid]="Pass.invalid && Pass.touched"
+                    >
+                    <small class="text-danger" *ngIf="Pass.errors?.required && Pass.touched">The Password is Required</small>
+                    <small class="text-danger" *ngIf="Pass.errors?.minlength && Pass.touched">The Password must contain atleast 6 character</small>
+            </div>
+        </div>
+        <div class="row">    
+            <div class=" form-group">
+                <button class="btn btn-primary" type="submit" [disabled]=form.invalid
+                >{{isLogin ? 'Login':'SignUp'}}</button>
+                 |
+                <button class="btn btn-primary" type="button" (click)="onSwitchMode()">
+                        Switch to {{isLogin ? 'SignUp':'Login'}}
+                </button>
+            </div>
+        </div>    
+        </form>  
+        
+        <div *ngIf="isLoading" role="status" style="text-align: center;">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
+    </div>
+    
+</div>           

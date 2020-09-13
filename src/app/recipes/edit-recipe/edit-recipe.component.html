@@ -1,0 +1,103 @@
+<div class="row">
+    <div class="col-xs-12">
+            <form [formGroup]="recipeFrom" (ngSubmit)="onSubmit()">
+                 <div class="row" style="margin-bottom: 10px;">
+                     <div class="col-xs-12">
+                         <button type="submit" style="margin-right: 4px;" [disabled]="recipeFrom.invalid" class="btn btn-success">Save</button>
+                         <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+                     </div>
+                 </div>
+                 <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" formControlName="name" [class.is-invalid]="name.invalid && name.touched"
+                             class="form-control" >
+                            <small class="text-danger" *ngIf="name.invalid && name.touched">Name is Required</small>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="imagePath">ImageURL</label>
+                                <input #image type="text" id="imagePath" formControlName="imgPath" 
+                                [class.is-invalid]="imgPath.invalid && imgPath.touched"
+                                 class="form-control" >
+                                 <small class="text-danger" *ngIf="imgPath.invalid && imgPath.touched">Image Path is Required</small>
+                            </div>
+                        </div>
+                 </div>  
+                 <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <img [src]="image.value" id="image" style="max-height: 200px;max-width:230px;"  class="image-responsive">
+                            </div>
+                        </div>
+                 </div>
+                 <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea type="text" row="6" 
+                                [class.is-invalid]="description.invalid && description.touched"
+                                formControlName="description" id="description" class="form-control" ></textarea>
+                                <small class="text-danger" *ngIf="description.invalid && description.touched">Description  is Required</small>
+                            </div>
+                        </div>
+                 </div>
+                 <div class="row">
+                     <div class="col-xs-12">
+                         <label>Ingredients</label>
+                     </div>
+                 </div>
+                 <div class="row" >
+                    <div class="col-xs-12" formArrayName="ingredients">
+                        <div class="row" *ngFor="let ing of formArray.controls ; let i=index" 
+                         [formGroupName]="i"
+                        >
+                                        <div class="col-xs-8">
+                                                <div class="form-group">
+                                                    
+                                                    <input formControlName="name"
+                                                     [class.is-invalid]="formArray.controls[i].get('name').invalid && formArray.controls[i].get('name').touched"
+                                                     type="text"  class="form-control">
+                                                    
+                                                </div>
+                                        </div>
+                                        <div class="col-xs-2">
+                                                <div class="form-group">
+                                                    
+                                                    <input type="number" 
+                                                    [class.is-invalid]="formArray.controls[i].get('amount').invalid && formArray.controls[i].get('amount').touched"
+                                                     formControlName="amount"  class="form-control">
+                                                </div>
+                                        </div>
+                                        <div class="col-xs-2">
+                                                <div class="form-group">
+                                                <button type="button" (click)="deleteIngredient(i)" class="btn btn-danger">X</button>
+                                                </div>
+                                        </div>
+                                        <div  class="col-xs-12 form-group">
+                                             <div  class="col-xs-8">
+                                                    <small class="text-danger" *ngIf="formArray.controls[i].get('name').invalid && formArray.controls[i].get('name').touched">Name of Ingredient  is Required</small>
+                                             </div>
+                                             <div  class="col-xs-4">
+                                                    <small class="text-danger"  *ngIf="formArray.controls[i].get('amount').errors?.required && formArray.controls[i].get('amount').touched">Amount of Ingredient  is Required</small>
+                                                    <small class="text-danger"  *ngIf="formArray.controls[i].get('amount').errors?.pattern && formArray.controls[i].get('amount').touched">Amount of Ingredient  cant be zero or lesser than that</small>
+                                             </div>
+                                        </div>
+                                        
+                                
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button class="btn btn-success" type="button" (click)="addItem()">Add Item</button>
+                        </div>
+                    </div>
+                </div>         
+
+            </form>        
+    </div>
+</div>    
